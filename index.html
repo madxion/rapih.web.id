@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rapih — Ruang Kerja & Pemformat Khusus Penulis Sastra & Novel</title>
+  <meta name="description" content="Editor naskah modern bebas distraksi khusus untuk penulis cerita, cerpen, dan novel Indonesia. Format dialog otomatis, manajemen bab, ekspor EPUB/DOCX, dan 100% offline-first di Windows." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Google Fonts: Plus Jakarta Sans & Newsreader for editorial elegance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            serif: ['"Newsreader"', 'Georgia', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#FFFBEB',
+              100: '#FEF3C7',
+              200: '#FDE68A',
+              300: '#FCD34D',
+              400: '#FBBF24',
+              500: '#F59E0B',
+              600: '#D97706',
+              700: '#B45309',
+              800: '#92400E',
+              900: '#78350F',
+            },
+            dark: {
+              950: '#07090E',
+              900: '#0B0F19',
+              850: '#101524',
+              800: '#161D31',
+              700: '#232D48',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom typography & subtle glows */
+    .hero-glow {
+      background: radial-gradient(circle at 50% 30%, rgba(245, 158, 11, 0.15) 0%, rgba(11, 15, 25, 0) 70%);
+    }
+    .prose-literary {
+      font-family: 'Newsreader', Georgia, serif;
+      line-height: 1.85;
+    }
+  </style>
+</head>
+<body class="bg-[#FAF8F5] text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+  <!-- Announcement Bar (Upcoming Cloud Pre-launch) -->
+  <aside class="bg-dark-900 border-b border-dark-800 text-slate-300 py-2.5 px-4 text-xs font-medium text-center relative z-50">
+    <div class="max-w-6xl mx-auto flex items-center justify-center gap-2 flex-wrap">
+      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">PRE-RELEASE</span>
+      <span>Aplikasi Desktop <strong>Rapih v1.0.0 untuk Windows</strong> kini tersedia gratis!</span>
+      <span class="hidden sm:inline text-slate-500">•</span>
+      <a href="#unduh" class="text-amber-400 hover:text-amber-300 font-bold underline underline-offset-2 flex items-center gap-1">
+        Unduh Sekarang →
+      </a>
+    </div>
+  </aside>
+
+  <!-- Sticky Navbar -->
+  <header class="sticky top-0 z-40 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-stone-200/80 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-2xl bg-amber-600 text-white flex items-center justify-center text-xl shadow-md shadow-amber-900/10 group-hover:scale-105 transition">
+          📚
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-2xl font-black tracking-tight text-slate-900">Rapih</span>
+            <span class="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md bg-stone-200/80 text-stone-700">Windows</span>
+          </div>
+          <p class="text-[10px] font-bold text-amber-700 tracking-wider uppercase">Sastra &amp; Narasi</p>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-xs font-bold text-slate-600">
+        <a href="#fitur" class="hover:text-amber-700 transition">Fitur Utama</a>
+        <a href="#demo" class="hover:text-amber-700 transition">Uji Coba Formatter</a>
+        <a href="#alur-kerja" class="hover:text-amber-700 transition">Alur Kerja</a>
+        <a href="#cloud" class="hover:text-amber-700 transition flex items-center gap-1.5">
+          <span>Rapih Cloud</span>
+          <span class="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-black">SEGERA</span>
+        </a>
+        <a href="#faq" class="hover:text-amber-700 transition">FAQ</a>
+      </nav>
+
+      <!-- Desktop CTA -->
+      <div class="hidden sm:flex items-center gap-3">
+        <a href="#unduh" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-md transition flex items-center gap-2">
+          <span>💻</span>
+          <span>Unduh Gratis</span>
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobileMenuBtn" type="button" class="md:hidden p-2.5 rounded-xl border border-stone-300 text-slate-700 hover:bg-stone-100 transition" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-b border-stone-200 bg-[#FAF8F5] px-6 py-6 space-y-4">
+      <nav class="flex flex-col space-y-3 text-sm font-semibold text-slate-700">
+        <a href="#fitur" class="py-1 hover:text-amber-700" onclick="toggleMobileMenu()">Fitur Utama</a>
+        <a href="#demo" class="py-1 hover:text-amber-700" onclick="toggleMobileMenu()">Uji Coba Formatter</a>
+        <a href="#alur-kerja" class="py-1 hover:text-amber-700" onclick="toggleMobileMenu()">Alur Kerja</a>
+        <a href="#cloud" class="py-1 hover:text-amber-700" onclick="toggleMobileMenu()">Rapih Cloud (Segera Hadir)</a>
+        <a href="#faq" class="py-1 hover:text-amber-700" onclick="toggleMobileMenu()">Tanya Jawab (FAQ)</a>
+      </nav>
+      <div class="pt-3 border-t border-stone-200">
+        <a href="#unduh" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs text-center flex items-center justify-center gap-2 shadow" onclick="toggleMobileMenu()">
+          <span>💻</span> Unduh Rapih Windows (v1.0.0)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative pt-12 pb-20 sm:pt-20 sm:pb-32 overflow-hidden hero-glow">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+
+      <!-- Pill Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-stone-200/90 shadow-xs text-xs font-semibold text-amber-800 mb-6">
+        <span class="flex h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
+        <span>Ruang Kerja Khusus Penulis Sastra &amp; Narasi</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.15] max-w-4xl mx-auto">
+        Bukan Sekadar Mengetik.<br class="hidden sm:inline" />
+        <span class="font-serif italic font-normal text-amber-700">Editor yang Dirancang Khusus</span> untuk Penulis Novel.
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="mt-6 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto font-normal">
+        Bebas dari kerumitan tata letak dokumen umum. Fokus pada plot, penokohan, dan dialog tanpa rasa cemas kehilangan ide naskah. Berjalan <strong>100% offline di laptop Windows</strong> Anda.
+      </p>
+
+      <!-- Hero CTAs -->
+      <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#unduh" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-sm shadow-xl shadow-amber-900/20 transition hover:-translate-y-0.5 flex items-center justify-center gap-3">
+          <span>💻</span>
+          <span>Unduh Rapih Windows (Gratis)</span>
+        </a>
+        <a href="#demo" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white hover:bg-stone-50 text-slate-700 font-bold text-sm border border-stone-300 shadow-xs transition flex items-center justify-center gap-2">
+          <span>✨</span>
+          <span>Coba Fitur Rapikan Teks</span>
+        </a>
+      </div>
+
+      <div class="mt-4 flex items-center justify-center gap-4 text-xs text-slate-500">
+        <span>✓ Windows 10 &amp; 11 (64-bit)</span>
+        <span>•</span>
+        <span>✓ 100% Gratis &amp; Bebas Iklan</span>
+        <span>•</span>
+        <span>✓ Offline-First</span>
+      </div>
+
+      <!-- Desktop App Mockup Frame with Real Screenshot -->
+      <div class="mt-12 sm:mt-16 max-w-5xl mx-auto relative">
+        <div class="rounded-3xl bg-dark-900 p-2 sm:p-4 shadow-2xl border border-slate-700/60 ring-1 ring-black/10">
+          
+          <!-- Windows Titlebar Mockup -->
+          <div class="flex items-center justify-between px-3 py-2 border-b border-slate-800 text-slate-400 text-xs font-mono mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-sm">📖</span>
+              <span class="font-sans font-semibold text-slate-200">Rapih — Jaka &amp; Daun Muda (v1.0.0)</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <span class="w-3 h-3 rounded-full bg-slate-700 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-slate-700 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-600/80 inline-block"></span>
+            </div>
+          </div>
+
+          <!-- App Screenshot -->
+          <div class="rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 shadow-inner">
+            <img
+              src="images/rapih-app-preview.png"
+              alt="Tampilan Antarmuka Aplikasi Desktop Rapih — Ruang Kerja Penulis Sastra & Narasi"
+              class="w-full h-auto object-cover object-top block"
+              loading="eager"
+            />
+          </div>
+        </div>
+
+        <!-- 4 Highlight Badges Under Preview -->
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
+          <div class="p-4 rounded-2xl bg-white border border-stone-200/90 shadow-2xs">
+            <div class="text-xl mb-1.5">🛡️</div>
+            <h4 class="font-bold text-xs text-slate-900">100% Offline-First</h4>
+            <p class="text-[11px] text-slate-500 mt-1 leading-snug">Naskah tersimpan aman di disk laptop Anda. Tidak butuh koneksi internet.</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white border border-stone-200/90 shadow-2xs">
+            <div class="text-xl mb-1.5">💬</div>
+            <h4 class="font-bold text-xs text-slate-900">Format Dialog 1-Klik</h4>
+            <p class="text-[11px] text-slate-500 mt-1 leading-snug">Rapikan tanda petik, dialog tag, dan alinea sastra secara otomatis.</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white border border-stone-200/90 shadow-2xs">
+            <div class="text-xl mb-1.5">📚</div>
+            <h4 class="font-bold text-xs text-slate-900">Manajemen Multi-Bab</h4>
+            <p class="text-[11px] text-slate-500 mt-1 leading-snug">Kelola puluhan bab novel dalam satu proyek naskah yang terstruktur.</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white border border-stone-200/90 shadow-2xs">
+            <div class="text-xl mb-1.5">📦</div>
+            <h4 class="font-bold text-xs text-slate-900">Ekspor Siap Terbit</h4>
+            <p class="text-[11px] text-slate-500 mt-1 leading-snug">Hasilkan buku digital EPUB ber-cover, berkas Word DOCX, atau salin Wattpad.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE FORMATTER DEMO WIDGET -->
+  <section id="demo" class="py-16 sm:py-24 bg-white border-y border-stone-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="text-xs font-bold text-amber-700 tracking-wider uppercase bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+          Uji Coba Langsung di Browser
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3 tracking-tight">
+          Lihat Keajaiban Fitur <span class="font-serif italic font-normal text-amber-700">“Rapikan Teks”</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500 mt-2">
+          Ketik atau gunakan teks contoh di bawah untuk melihat bagaimana Rapih menata tanda petik, spasi elipsis, dan alinea narasi secara rapi.
+        </p>
+      </div>
+
+      <!-- Demo Box -->
+      <div class="rounded-3xl bg-stone-50 border border-stone-200 p-5 sm:p-8 shadow-xs">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Input Side -->
+          <div class="flex flex-col">
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                <span>✍️</span> Teks Mentah (Sebelum Dirapikan)
+              </label>
+              <button
+                type="button"
+                id="loadSampleBtn"
+                class="text-[11px] text-amber-700 font-bold hover:underline cursor-pointer"
+              >
+                Isi Contoh Naskah
+              </button>
+            </div>
+            <textarea
+              id="rawTextInput"
+              rows="9"
+              placeholder="Ketik teks dialog berantakan di sini..."
+              class="w-full p-4 rounded-2xl border border-stone-300 bg-white font-mono text-xs leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-amber-500 resize-none text-slate-800"
+            >"kamu mau kemana?"tanya dia pelan..."aku cuma mau keluar sebentar",jawabku sambil menatap keluar jendela.</textarea>
+          </div>
+
+          <!-- Output Side -->
+          <div class="flex flex-col">
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-xs font-bold text-emerald-800 flex items-center gap-1.5">
+                <span>✨</span> Hasil Pemformatan Sastra
+              </label>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800">
+                Format Standar Buku
+              </span>
+            </div>
+            <div
+              id="formattedTextOutput"
+              class="w-full h-full min-h-[180px] p-4 rounded-2xl border border-emerald-200 bg-emerald-50/40 font-serif text-sm leading-relaxed text-slate-900 whitespace-pre-wrap select-all overflow-y-auto"
+            >“Kamu mau ke mana?” tanya dia pelan…
+
+“Aku cuma mau keluar sebentar,” jawabku sambil menatap keluar jendela.</div>
+          </div>
+        </div>
+
+        <!-- Action Toolbar -->
+        <div class="mt-6 pt-5 border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-[11px] text-slate-500 flex items-center gap-2">
+            <span>💡</span>
+            <span>Di aplikasi desktop, Anda dapat merapikan ratusan halaman bab hanya dengan shortcut <kbd class="px-1.5 py-0.5 rounded bg-stone-200 font-mono text-[10px] font-bold">Ctrl + R</kbd>.</span>
+          </div>
+
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <button
+              type="button"
+              id="runFormatBtn"
+              class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>⚡</span> Rapikan Teks Sekarang
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEEP-DIVE FEATURES SECTION -->
+  <section id="fitur" class="py-20 sm:py-32">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs font-bold text-amber-700 tracking-wider uppercase bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+          Dirancang Khusus Penulis Fiksi
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 tracking-tight">
+          Semua Kebutuhan Penulisan Novel Dalam Satu Tempat
+        </h2>
+        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+          Dirancang dengan memahami keresahan nyata para penulis: tidak ingin pusing memikirkan margin, font, dan tabulasi, namun naskah tetap tersusun indah sesuai kaidah bahasa.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="p-8 rounded-3xl bg-white border border-stone-200/80 shadow-xs hover:border-amber-300 transition duration-200">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mb-6">
+            ✨
+          </div>
+          <h3 class="text-base font-extrabold text-slate-900 mb-2">
+            Penataan Dialog &amp; Narasi Sastra
+          </h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Secara cerdas mengoreksi tanda petik lurus menjadi petik lengkung ("..."), memformat dialog tag sesuai PUEBI/EYD, dan memisahkan adegan dengan tanda pembatas yang seragam.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="p-8 rounded-3xl bg-white border border-stone-200/80 shadow-xs hover:border-amber-300 transition duration-200">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mb-6">
+            🗂️
+          </div>
+          <h3 class="text-base font-extrabold text-slate-900 mb-2">
+            Hierarki Proyek Tanpa Tercecer
+          </h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Tidak perlu lagi menyimpan berkas naskah seperti <em>bab_1_final_revisi2.docx</em>. Seluruh bab novel tersimpan rapi dalam satu berkas proyek yang dapat diatur ulang urutannya.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="p-8 rounded-3xl bg-white border border-stone-200/80 shadow-xs hover:border-amber-300 transition duration-200">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mb-6">
+            🎯
+          </div>
+          <h3 class="text-base font-extrabold text-slate-900 mb-2">
+            Target Kata &amp; Estimasi Waktu Baca
+          </h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Tentukan target jumlah kata harian Anda. Pantau statistik penulisan real-time, waktu membaca pembaca per bab, serta perkembangan total panjang novel.
+          </p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="p-8 rounded-3xl bg-white border border-stone-200/80 shadow-xs hover:border-amber-300 transition duration-200">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mb-6">
+            📦
+          </div>
+          <h3 class="text-base font-extrabold text-slate-900 mb-2">
+            Ekspor EPUB &amp; DOCX Siap Terbit
+          </h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Ekspor seluruh bab ke berkas EPUB lengkap dengan cover buku digital, naskah Word (.docx) berstandar penerbit mayor, atau format ringkas untuk Wattpad dan KaryaKarsa.
+          </p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="p-8 rounded-3xl bg-white border border-stone-200/80 shadow-xs hover:border-amber-300 transition duration-200">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mb-6">
+            ⏱️
+          </div>
+          <h3 class="text-base font-extrabold text-slate-900 mb-2">
+            Snapshot Versi &amp; Cadangan Otomatis
+          </h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Jangan pernah takut ide naskah terhapus saat menulis tengah malam. Rapih mencatat riwayat perubahan dan snapshot otomatis secara berkala di latar belakang.
+          </p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="p-8 rounded-3xl bg-white border border-stone-200/80 shadow-xs hover:border-amber-300 transition duration-200">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mb-6">
+            🌙
+          </div>
+          <h3 class="text-base font-extrabold text-slate-900 mb-2">
+            Tipografi Sastra &amp; Tema Ramah Mata
+          </h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Pilihan tema Sepia, Gelap (Dark Mode), dan Terang dengan ukuran font yang dapat disesuaikan. Menjaga mata tetap nyaman berjam-jam saat menuangkan imajinasi.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON TABLE SECTION -->
+  <section class="py-20 bg-stone-100/70 border-y border-stone-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          Mengapa Penulis Memilih Rapih dibanding Word Biasa?
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500 mt-2">
+          Perbedaan mendasar antara pengolah kata umum kantor dengan ruang kerja khusus novelis.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-3xl border border-stone-200 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="bg-stone-50 border-b border-stone-200 text-slate-500">
+                <th class="p-5 font-bold uppercase tracking-wider text-[11px]">Kebutuhan Menulis</th>
+                <th class="p-5 font-bold text-amber-800 text-sm">✨ Rapih (Desktop)</th>
+                <th class="p-5 font-bold text-slate-500 text-sm">Microsoft Word / Docs</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-stone-100 text-slate-700">
+              <tr>
+                <td class="p-5 font-bold text-slate-900">Format Dialog &amp; Alinea Otomatis</td>
+                <td class="p-5 font-bold text-emerald-700">✅ 1-Klik otomatis sesuai EYD sastra</td>
+                <td class="p-5 text-slate-500">❌ Harus manual spasi &amp; tabulasi</td>
+              </tr>
+              <tr>
+                <td class="p-5 font-bold text-slate-900">Struktur Naskah Bab &amp; Cerita</td>
+                <td class="p-5 font-bold text-emerald-700">✅ Panel sidebar bab terorganisir rapi</td>
+                <td class="p-5 text-slate-500">❌ Tercecer ke banyak berkas .docx</td>
+              </tr>
+              <tr>
+                <td class="p-5 font-bold text-slate-900">Ekspor EPUB Ber-Cover</td>
+                <td class="p-5 font-bold text-emerald-700">✅ Langsung jadi buku digital siap baca</td>
+                <td class="p-5 text-slate-500">❌ Butuh aplikasi konverter tambahan</td>
+              </tr>
+              <tr>
+                <td class="p-5 font-bold text-slate-900">Privasi &amp; Bekerja Offline</td>
+                <td class="p-5 font-bold text-emerald-700">✅ 100% Offline, naskah di disk Anda</td>
+                <td class="p-5 text-slate-500">⚠️ Bergantung cloud/login sinkron</td>
+              </tr>
+              <tr>
+                <td class="p-5 font-bold text-slate-900">Kenyamanan Visual Menulis</td>
+                <td class="p-5 font-bold text-emerald-700">✅ Mode Sepia &amp; Gelap bebas distraksi</td>
+                <td class="p-5 text-slate-500">❌ Dipenuhi toolbar tabel, margin, grafik</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UPCOMING CLOUD PLATFORM TEASER -->
+  <section id="cloud" class="py-20 sm:py-28 bg-dark-900 text-white relative overflow-hidden">
+    <!-- Ambient glow -->
+    <div class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+    <div class="absolute -left-20 -bottom-20 w-80 h-80 rounded-full bg-amber-700/10 blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+        <div class="max-w-xl text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-amber-400 text-xs font-semibold mb-4">
+            <span>☁️</span> Segera Hadir: Ekosistem Rapih Cloud
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+            Naskah Anda, Tersinkron Aman ke Mana Saja.
+          </h2>
+          <p class="text-sm text-slate-300 mt-4 leading-relaxed">
+            Kami sedang merampungkan platform <strong>Rapih Cloud</strong> yang menghubungkan aplikasi desktop Windows Anda dengan:
+          </p>
+
+          <ul class="mt-6 space-y-3 text-xs sm:text-sm text-slate-300">
+            <li class="flex items-start gap-2.5">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Akses Naskah Multi-Perangkat:</strong> Tulis di laptop kantor atau PC rumah tanpa perlu repot flashdisk.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Web Reader untuk Beta Reader &amp; Editor:</strong> Bagikan naskah bacaan ke editor tanpa risiko naskah mentah bocor.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Stories &amp; Monetisasi Royalti:</strong> Terbitkan bab berbayar langsung ke pembaca setia Anda dengan pembagian bagi hasil transparan.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Waitlist Card -->
+        <div class="w-full max-w-md bg-slate-800/80 p-8 rounded-3xl border border-slate-700 shadow-2xl backdrop-blur-xs">
+          <h3 class="font-bold text-base text-white mb-1">
+            Dapatkan Akses Perdana Rapih Cloud
+          </h3>
+          <p class="text-xs text-slate-400 mb-6">
+            Daftarkan email Anda untuk menerima undangan beta tester dan kupon penyimpanan cloud gratis saat resmi diluncurkan.
+          </p>
+
+          <form id="waitlistForm" class="space-y-3">
+            <div>
+              <label for="wlEmail" class="block text-[11px] font-bold text-slate-300 mb-1">Alamat Email Anda</label>
+              <input
+                type="email"
+                id="wlEmail"
+                required
+                placeholder="penulis@contoh.id"
+                class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-xs focus:outline-hidden focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <div>
+              <label for="wlName" class="block text-[11px] font-bold text-slate-300 mb-1">Nama Pena / Penulis (Opsional)</label>
+              <input
+                type="text"
+                id="wlName"
+                placeholder="Contoh: Pramoedya"
+                class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-xs focus:outline-hidden focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <button
+              type="submit"
+              id="wlSubmitBtn"
+              class="w-full py-3.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md transition cursor-pointer flex items-center justify-center gap-2"
+            >
+              <span>🔔</span> Beritahu Saya Saat Siap
+            </button>
+          </form>
+
+          <div id="wlSuccessMsg" class="hidden mt-4 p-4 rounded-xl bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs text-center">
+            🎉 Terima kasih! Email Anda telah tercatat dalam daftar tunggu prioritas. Kami akan mengabari Anda segera.
+          </div>
+
+          <p class="text-[10px] text-slate-500 text-center mt-4">
+            Kami menjamin 100% privasi Anda. Tanpa spam, berhenti berlangganan kapan saja.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD SECTION -->
+  <section id="unduh" class="py-20 sm:py-28 bg-[#FAF8F5]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      
+      <span class="text-xs font-bold text-amber-800 tracking-wider uppercase bg-amber-100/70 px-3 py-1 rounded-full border border-amber-200">
+        Instalasi Cepat &amp; Ringan
+      </span>
+
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-4 tracking-tight">
+        Mulai Menulis Bab Pertama Anda Sekarang
+      </h2>
+
+      <p class="text-xs sm:text-sm text-slate-600 mt-2 max-w-xl mx-auto leading-relaxed">
+        Unduh paket aplikasi desktop Rapih untuk Windows 64-bit. Ekstrak atau pasang langsung di komputer Anda tanpa konfigurasi rumit.
+      </p>
+
+      <!-- Download Card -->
+      <div class="mt-8 p-6 sm:p-10 rounded-3xl bg-white border border-stone-200 shadow-md text-left flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="space-y-3 flex-1">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-600 text-white flex items-center justify-center text-2xl shadow-sm">
+              💻
+            </div>
+            <div>
+              <h3 class="font-extrabold text-base text-slate-900">Rapih untuk Windows (v1.0.0)</h3>
+              <p class="text-xs text-slate-500">Versi Stabil • Standalone Portable / Executable</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-600 pt-2 border-t border-stone-100">
+            <div>• Arsitektur: <strong>x64 (64-bit)</strong></div>
+            <div>• Sistem: <strong>Windows 10 / 11</strong></div>
+            <div>• Ukuran: <strong>~163 MB</strong></div>
+            <div>• Lisensi: <strong>Gratis Pribadi</strong></div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3 w-full md:w-auto shrink-0">
+          <a
+            href="https://drive.google.com/file/d/1oJ-zRH2ddANFNEZEYwJLsv8NpXDIFZ5_/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-8 py-4 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs sm:text-sm text-center shadow-lg shadow-amber-900/20 transition flex items-center justify-center gap-2.5"
+          >
+            <span>⬇️</span>
+            <span>Unduh Berkas Aplikasi (Google Drive)</span>
+          </a>
+          <p class="text-[10px] text-slate-400 text-center">
+            Tersimpan aman di Google Drive resmi Rapih.
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Setup Guide -->
+      <div class="mt-8 text-left grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-slate-600">
+        <div class="p-4 rounded-2xl bg-stone-100/80 border border-stone-200/80">
+          <strong class="text-slate-900 block mb-1">1. Unduh Berkas</strong>
+          <p class="text-[11px] leading-relaxed">Buka tautan Google Drive resmi dan klik tombol Unduh untuk menyimpan berkas aplikasi ke komputer Anda.</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-stone-100/80 border border-stone-200/80">
+          <strong class="text-slate-900 block mb-1">2. Jalankan Aplikasi</strong>
+          <p class="text-[11px] leading-relaxed">Klik dua kali pada <code>Rapih.App.exe</code>. Aplikasi langsung terbuka tanpa instalasi panjang.</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-stone-100/80 border border-stone-200/80">
+          <strong class="text-slate-900 block mb-1">3. Buat Proyek Cerita</strong>
+          <p class="text-[11px] leading-relaxed">Pilih <em>Proyek Baru</em>, beri judul naskah Anda, dan mulailah merangkai kata dengan tenang.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section id="faq" class="py-20 bg-stone-50 border-t border-stone-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-xl mx-auto mb-12">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          Pertanyaan yang Sering Diajukan
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500 mt-2">
+          Hal-hal penting yang sering ditanyakan oleh sesama rekan penulis.
+        </p>
+      </div>
+
+      <div class="space-y-3" id="faqAccordion">
+        <!-- Q1 -->
+        <div class="bg-white rounded-2xl border border-stone-200/90 overflow-hidden shadow-2xs">
+          <button type="button" class="faq-toggle w-full p-5 text-left font-bold text-xs sm:text-sm text-slate-900 flex items-center justify-between gap-4 cursor-pointer">
+            <span>Apakah aplikasi desktop Rapih benar-benar gratis?</span>
+            <span class="text-stone-400 font-mono text-base transition-transform duration-200">+</span>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-stone-100 pt-3">
+            Ya! Aplikasi desktop Rapih untuk Windows sepenuhnya gratis untuk diunduh dan digunakan tanpa batas waktu, tanpa iklan yang mengganggu, dan tanpa batasan jumlah bab maupun kata.
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="bg-white rounded-2xl border border-stone-200/90 overflow-hidden shadow-2xs">
+          <button type="button" class="faq-toggle w-full p-5 text-left font-bold text-xs sm:text-sm text-slate-900 flex items-center justify-between gap-4 cursor-pointer">
+            <span>Bagaimana jika laptop saya tidak terhubung ke internet saat menulis?</span>
+            <span class="text-stone-400 font-mono text-base transition-transform duration-200">+</span>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-stone-100 pt-3">
+            Rapih menganut prinsip <strong>Offline-First</strong>. Seluruh proses penulisan, penyimpanan bab, riwayat snapshot, dan ekspor berkas dilakukan secara lokal di penyimpanan komputer Anda. Anda bebas menulis di kafe, pegunungan, atau di pesawat tanpa internet.
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="bg-white rounded-2xl border border-stone-200/90 overflow-hidden shadow-2xs">
+          <button type="button" class="faq-toggle w-full p-5 text-left font-bold text-xs sm:text-sm text-slate-900 flex items-center justify-between gap-4 cursor-pointer">
+            <span>Format apa saja yang didukung untuk ekspor naskah?</span>
+            <span class="text-stone-400 font-mono text-base transition-transform duration-200">+</span>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-stone-100 pt-3">
+            Rapih mendukung ekspor instan ke berkas <strong>EPUB</strong> (buku digital siap baca di Google Play Books / Apple Books / Kindle), dokumen <strong>Word (.docx)</strong> berformat rapih siap dikirim ke penerbit, serta fitur 1-klik salin ke clipboard berformat Wattpad dan KaryaKarsa.
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="bg-white rounded-2xl border border-stone-200/90 overflow-hidden shadow-2xs">
+          <button type="button" class="faq-toggle w-full p-5 text-left font-bold text-xs sm:text-sm text-slate-900 flex items-center justify-between gap-4 cursor-pointer">
+            <span>Siapa pemegang hak cipta atas karya yang ditulis di Rapih?</span>
+            <span class="text-stone-400 font-mono text-base transition-transform duration-200">+</span>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-stone-100 pt-3">
+            <strong>100% Hak Cipta adalah milik Anda seutuhnya.</strong> Rapih hanyalah alat bantu penulisan. Kami tidak memiliki hak kepemilikan atau lisensi komersial apa pun atas cerita, nama tokoh, maupun alur yang Anda buat.
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="bg-white rounded-2xl border border-stone-200/90 overflow-hidden shadow-2xs">
+          <button type="button" class="faq-toggle w-full p-5 text-left font-bold text-xs sm:text-sm text-slate-900 flex items-center justify-between gap-4 cursor-pointer">
+            <span>Kapan platform Rapih Cloud akan diluncurkan?</span>
+            <span class="text-stone-400 font-mono text-base transition-transform duration-200">+</span>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-stone-100 pt-3">
+            Tahap uji coba (beta testing) untuk sinkronisasi cloud dan web reader akan dibuka dalam waktu dekat. Anda dapat mendaftarkan email di bagian daftar tunggu di atas untuk mendapatkan notifikasi peluncuran perdana.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-dark-950 text-slate-400 border-t border-slate-800 py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+        
+        <!-- Col 1: Brand -->
+        <div class="md:col-span-2 space-y-4">
+          <div class="flex items-center gap-2.5">
+            <span class="text-2xl">📚</span>
+            <span class="font-extrabold text-xl text-white">Rapih</span>
+            <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-amber-400 border border-slate-700">
+              Sastra &amp; Narasi
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+            Editor naskah modern yang dirancang khusus untuk membebaskan penulis dari kerumitan format dokumen umum. Menjaga fokus imajinasi, menyusun bab rapi, dan mengamankan karya Anda.
+          </p>
+          <div class="pt-2 text-xs text-slate-500">
+            © 2026 Rapih. Seluruh hak cipta naskah adalah milik penulis.
+          </div>
+        </div>
+
+        <!-- Col 2: Navigasi -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Navigasi Halaman</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#fitur" class="hover:text-white transition">Fitur Unggulan</a></li>
+            <li><a href="#demo" class="hover:text-white transition">Uji Formatter</a></li>
+            <li><a href="#alur-kerja" class="hover:text-white transition">Alur Kerja Penulis</a></li>
+            <li><a href="#cloud" class="hover:text-white transition">Rapih Cloud (Preview)</a></li>
+            <li><a href="#unduh" class="hover:text-white transition">Unduh Aplikasi Desktop</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Informasi & Kontak -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Komunitas &amp; Kontak</h4>
+          <ul class="space-y-2 text-xs">
+            <li><span class="text-slate-500">Email:</span> <a href="mailto:bantuan@rapih.id" class="text-slate-300 hover:text-white">bantuan@rapih.id</a></li>
+            <li><span class="text-slate-500">Komunitas:</span> <span class="text-slate-300">Grup Penulis Fiksi Indonesia</span></li>
+            <li><span class="text-slate-500">Platform:</span> <span class="text-slate-300">Windows 10 / 11 (64-bit)</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- LIGHTWEIGHT INTERACTIVITY SCRIPTS -->
+  <script>
+    // 1. Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    function toggleMobileMenu() {
+      if (mobileMenu) mobileMenu.classList.toggle('hidden');
+    }
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    }
+
+    // 2. Interactive Formatter Demo
+    const rawTextInput = document.getElementById('rawTextInput');
+    const formattedTextOutput = document.getElementById('formattedTextOutput');
+    const runFormatBtn = document.getElementById('runFormatBtn');
+    const loadSampleBtn = document.getElementById('loadSampleBtn');
+
+    function formatTextSimulated(input) {
+      if (!input.trim()) return '';
+      // Basic literary dialogue formatting simulation
+      let text = input.trim();
+      // Replace straight double quotes with curly quotes
+      text = text.replace(/"([^"]*)"/g, '“$1”');
+      // Normalize ellipsis
+      text = text.replace(/\.{3,}/g, '…');
+      // Split into paragraphs / dialog turns
+      let lines = text.split(/(?<=[.!?…”])\s*(?=[“A-Z])/g);
+      return lines.map(line => line.trim()).filter(Boolean).join('\n\n');
+    }
+
+    if (runFormatBtn && rawTextInput && formattedTextOutput) {
+      runFormatBtn.addEventListener('click', () => {
+        formattedTextOutput.textContent = formatTextSimulated(rawTextInput.value);
+      });
+    }
+
+    if (loadSampleBtn && rawTextInput && formattedTextOutput) {
+      loadSampleBtn.addEventListener('click', () => {
+        rawTextInput.value = `"kenapa kamu masih ragu?"bisik Rendra pelan..."karena cerita ini belum selesai",jawab Sekar sambil memandang cakrawala senja di tepi sawah.`;
+        formattedTextOutput.textContent = formatTextSimulated(rawTextInput.value);
+      });
+    }
+
+    // 3. FAQ Accordion
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+    faqToggles.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const content = btn.nextElementSibling;
+        const icon = btn.querySelector('span:last-child');
+        const isOpen = !content.classList.contains('hidden');
+        
+        // Close others
+        document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+        document.querySelectorAll('.faq-toggle span:last-child').forEach(i => {
+          i.textContent = '+';
+          i.classList.remove('rotate-45');
+        });
+
+        if (!isOpen) {
+          content.classList.remove('hidden');
+          if (icon) {
+            icon.textContent = '✕';
+          }
+        }
+      });
+    });
+
+    // 4. Waitlist Form Local Handling
+    const waitlistForm = document.getElementById('waitlistForm');
+    const wlSuccessMsg = document.getElementById('wlSuccessMsg');
+    const wlEmail = document.getElementById('wlEmail');
+    const wlName = document.getElementById('wlName');
+
+    if (waitlistForm && wlSuccessMsg) {
+      waitlistForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = wlEmail ? wlEmail.value : '';
+        const name = wlName ? wlName.value : '';
+        try {
+          const list = JSON.parse(localStorage.getItem('rapih_waitlist') || '[]');
+          list.push({ email, name, date: new Date().toISOString() });
+          localStorage.setItem('rapih_waitlist', JSON.stringify(list));
+        } catch (err) {}
+        
+        waitlistForm.classList.add('hidden');
+        wlSuccessMsg.classList.remove('hidden');
+      });
+    }
+  </script>
+</body>
+</html>

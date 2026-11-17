@@ -1,0 +1,10 @@
+# Binaries and archives
+*.exe
+*.zip
+*.rar
+*.7z
+downloads/
+
+# OS metadata
+.DS_Store
+Thumbs.db
